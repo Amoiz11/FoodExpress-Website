@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodExpress - Order Delicious Food Online</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="Orange_and_White_Illustrative_Catering_Food_Logo-removebg-preview.png">
+</head>
+<body>
+    <!-- Simple Splash Screen -->
+    <div class="splash-screen">
+        <div class="splash-logo">🍗 FoodExpress</div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <h2 class="logo">🍗 FoodExpress</h2>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                
+            </ul>
+            <div class="nav-buttons">
+             <!--   <button class="login-btn" id="login-btn">Login</button> -->
+                <button class="cart-btn" onclick="location.href='menu.html'">🛒 Order Now</button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Delicious Food Delivered To Your Doorstep</h1>
+            <p>Experience the taste of premium burgers, broast, and more!</p>
+            <button class="order-btn" onclick="location.href='menu.html'">Order Now</button>
+        </div>
+    </section>
+
+    <section class="features">
+        <h2>Why Choose FoodExpress?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3>Fast Delivery</h3>
+                <p>20-30 minutes delivery</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🍔</div>
+                <h3>Fresh Food</h3>
+                <p>100% fresh ingredients</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3>Best Prices</h3>
+                <p>Affordable for everyone</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⭐</div>
+                <h3>5-Star Quality</h3>
+                <p>Premium quality standards</p>
+            </div>
+        </div>
+    </section>
+    <section class="notifications-section">
+        <h2>Your History</h2>
+        <div class="notifications-container" id="notifications-container">
+            <div class="notification-placeholder">
+                <p>No notifications yet. Place an order to see updates here!</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 FoodExpress. All Rights Reserved.</p>
+            <p class="team-credit">A PROJECT BY TEAM A-Z</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

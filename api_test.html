@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodExpress - API Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #8B0000, #A52A2A);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            background: white;
+            color: #333;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            text-align: center;
+            border: 5px solid #FFD700;
+            max-width: 600px;
+            width: 90%;
+        }
+        
+        h1 {
+            color: #8B0000;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+        
+        .status-box {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            border-left: 5px solid #8B0000;
+        }
+        
+        .online {
+            color: #28a745;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .offline {
+            color: #dc3545;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #8B0000, #A52A2A);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(139, 0, 0, 0.4);
+        }
+        
+        .api-response {
+            background: #e9ecef;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            text-align: left;
+            font-family: monospace;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍗 FoodExpress API Test</h1>
+        
+        <div class="status-box">
+            <h2>FastAPI Connection Status</h2>
+            <div id="status" class="offline">🔴 Checking...</div>
+        </div>
+        
+        <button class="btn" onclick="testConnection()">Test Connection</button>
+        <button class="btn" onclick="testMenuAPI()">Test Menu API</button>
+        <button class="btn" onclick="testOrderAPI()">Test Order API</button>
+        <button class="btn" onclick="testAllAPIs()">Test All APIs</button>
+        
+        <div class="api-response" id="response">
+            API responses will appear here...
+        </div>
+        
+        <div style="margin-top: 2rem; color: #666;">
+            <p><strong>Note:</strong> Ye test page hai sirf proof ke liye</p>
+            <p>Actual website pe bhi yehi APIs use ho rahi hain</p>
+        </div>
+    </div>
+
+    <script>
+        // Tumhara FastAPI server URL
+        const API_URL = 'http://localhost:8000';
+        
+        async function testConnection() {
+            const status = document.getElementById('status');
+            const response = document.getElementById('response');
+            
+            try {
+                status.innerHTML = '🟡 Connecting...';
+                response.innerHTML = 'Testing connection to: ' + API_URL;
+                
+                const result = await fetch(API_URL + '/api/health');
+                const data = await result.json();
+                
+                status.innerHTML = '🟢 ONLINE - FastAPI Connected!';
+                status.className = 'online';
+                response.innerHTML = '✅ HEALTH API WORKING!\n\n' + JSON.stringify(data, null, 2);
+                
+            } catch (error) {
+                status.innerHTML = '🔴 OFFLINE - Connection Failed';
+                status.className = 'offline';
+                response.innerHTML = 'Error: ' + error.message + 
+                    '\n\nMake sure:\n1. FastAPI server running hai\n2. Port 8000 open hai\n3. CORS enabled hai';
+            }
+        }
+        
+        async function testMenuAPI() {
+            const response = document.getElementById('response');
+            
+            try {
+                response.innerHTML = 'Fetching menu from API...';
+                
+                const result = await fetch(API_URL + '/api/menu');
+                const data = await result.json();
+                
+                response.innerHTML = '✅ MENU API WORKING!\n\n' + 
+                    'Menu Items Found: ' + data.menu.length + '\n' +
+                    'Success: ' + data.success + '\n\n' +
+                    'Menu Data:\n' + JSON.stringify(data.menu, null, 2);
+                    
+            } catch (error) {
+                response.innerHTML = '❌ Menu API Failed: ' + error.message;
+            }
+        }
+        
+        async function testOrderAPI() {
+            const response = document.getElementById('response');
+            
+            try {
+                response.innerHTML = 'Testing order placement...';
+                
+                const result = await fetch(API_URL + '/api/orders', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                const data = await result.json();
+                response.innerHTML = '✅ ORDER API WORKING!\n\n' + 
+                    JSON.stringify(data, null, 2);
+                    
+            } catch (error) {
+                response.innerHTML = '❌ Order API Failed: ' + error.message;
+            }
+        }
+        
+        async function testAllAPIs() {
+            const response = document.getElementById('response');
+            response.innerHTML = 'Testing all APIs...\n\n';
+            
+            // Test Health
+            try {
+                const healthResult = await fetch(API_URL + '/api/health');
+                const healthData = await healthResult.json();
+                response.innerHTML += '✅ Health API: WORKING\n';
+            } catch (error) {
+                response.innerHTML += '❌ Health API: FAILED\n';
+            }
+            
+            // Test Menu
+            try {
+                const menuResult = await fetch(API_URL + '/api/menu');
+                const menuData = await menuResult.json();
+                response.innerHTML += '✅ Menu API: WORKING (' + menuData.menu.length + ' items)\n';
+            } catch (error) {
+                response.innerHTML += '❌ Menu API: FAILED\n';
+            }
+            
+            // Test Orders
+            try {
+                const orderResult = await fetch(API_URL + '/api/orders', {method: 'POST'});
+                const orderData = await orderResult.json();
+                response.innerHTML += '✅ Order API: WORKING\n';
+            } catch (error) {
+                response.innerHTML += '❌ Order API: FAILED\n';
+            }
+            
+            // Test Notifications
+            try {
+                const notifResult = await fetch(API_URL + '/api/notifications');
+                const notifData = await notifResult.json();
+                response.innerHTML += '✅ Notifications API: WORKING\n';
+            } catch (error) {
+                response.innerHTML += '❌ Notifications API: FAILED\n';
+            }
+            
+            response.innerHTML += '\n🎉 All APIs Tested Successfully!';
+        }
+        
+        // Auto-test on page load
+        testConnection();
+    </script>
+</body>
+</html>

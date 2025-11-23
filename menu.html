@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - FoodExpress</title>
+    <link rel="icon" type="image/x-icon" href="Orange_and_White_Illustrative_Catering_Food_Logo-removebg-preview.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: linear-gradient(135deg, #8B0000, #A52A2A);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(139, 0, 0, 0.4);
+            border-bottom: 3px solid #DAA520;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            color: #FFD700;
+            font-size: 2rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-menu a:hover {
+            color: #FFD700;
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .cart-btn {
+            background: #FFD700;
+            color: #8B0000;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 1rem;
+            box-shadow: 0 3px 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .cart-btn:hover {
+            background: #FFC400;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Menu Hero Section */
+        .menu-hero {
+            background: linear-gradient(rgba(139, 0, 0, 0.85), rgba(165, 42, 42, 0.8)), 
+                        url('https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=1200');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-top: 80px;
+        }
+
+        .menu-hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6);
+        }
+
+        .menu-hero-content p {
+            font-size: 1.4rem;
+            color: #FFD700;
+            font-weight: bold;
+        }
+
+        /* Menu Section */
+        .menu-section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #f8f9fa;
+        }
+
+        .menu-section h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: #8B0000;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .category-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background: white;
+            color: #8B0000;
+            border: 2px solid #8B0000;
+            padding: 0.8rem 1.8rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 1rem;
+        }
+
+        .category-btn.active,
+        .category-btn:hover {
+            background: linear-gradient(135deg, #8B0000, #A52A2A);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.3);
+            border-color: #8B0000;
+        }
+
+        .menu-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(139, 0, 0, 0.15);
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 3px solid #FFD700;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(139, 0, 0, 0.3);
+            border-color: #8B0000;
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            border: 3px solid #FFD700;
+            transition: all 0.3s;
+        }
+
+        .menu-item:hover img {
+            border-color: #8B0000;
+            transform: scale(1.05);
+        }
+
+        .menu-item h3 {
+            color: #8B0000;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .menu-item:hover h3 {
+            color: #B22222;
+            transform: scale(1.1);
+        }
+
+        .menu-item p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .price {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #8B0000;
+            display: block;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .menu-item:hover .price {
+            color: #FF0000;
+            transform: scale(1.2);
+        }
+
+        .add-to-cart {
+            background: linear-gradient(135deg, #8B0000, #A52A2A);
+            color: white;
+            border: none;
+            padding: 0.9rem 2.2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3);
+        }
+
+        .add-to-cart:hover {
+            background: linear-gradient(135deg, #A52A2A, #8B0000);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(139, 0, 0, 0.4);
+        }
+
+        /* Quick Notification */
+        .quick-notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: linear-gradient(135deg, #8B0000, #A52A2A);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.4);
+            z-index: 1500;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            border-left: 4px solid #FFD700;
+            max-width: 300px;
+        }
+
+        .quick-notification.show {
+            transform: translateX(0);
+        }
+
+        .quick-notification-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quick-notification-icon {
+            font-size: 1.5rem;
+        }
+
+        /* Notifications Section - UPDATED WITH CLEAR BUTTON */
+        .notifications-section {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #8B0000, #A52A2A);
+            color: white;
+            margin-top: 2rem;
+        }
+
+        .notifications-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .notifications-header h2 {
+            text-align: left;
+            font-size: 2.5rem;
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin: 0;
+        }
+
+        .clear-all-btn {
+            background: #FFD700;
+            color: #8B0000;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            box-shadow: 0 3px 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .clear-all-btn:hover {
+            background: #FFC400;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .notifications-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            min-height: 200px;
+            backdrop-filter: blur(10px);
+        }
+
+        .notification {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            color: #333;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            border-left: 5px solid #FFD700;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            animation: slideIn 0.5s ease;
+        }
+
+        .notification:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .notification.success {
+            border-left-color: #28a745;
+            background: linear-gradient(135deg, #d4edda, #f8f9fa);
+        }
+
+        .notification.info {
+            border-left-color: #17a2b8;
+            background: linear-gradient(135deg, #d1ecf1, #f8f9fa);
+        }
+
+        .notification-time {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        .notification-placeholder {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 3rem 2rem;
+            font-size: 1.1rem;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Cart Modal */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+        }
+
+        .cart-content {
+            background: white;
+            margin: 2% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border: 3px solid #FFD700;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .cart-content h3 {
+            color: #8B0000;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 2px solid #eee;
+            transition: all 0.3s ease;
+        }
+
+        .cart-item:hover {
+            background: rgba(139, 0, 0, 0.05);
+            transform: translateX(5px);
+            border-radius: 8px;
+            padding-left: 1rem;
+        }
+
+        .remove-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .remove-btn:hover {
+            background: #c82333;
+            transform: scale(1.05);
+        }
+
+        .cart-total {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 3px solid #FFD700;
+            text-align: center;
+        }
+
+        .cart-total strong {
+            font-size: 1.3rem;
+            color: #8B0000;
+        }
+
+        .place-order-btn {
+            background: linear-gradient(135deg, #8B0000, #A52A2A);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-top: 1rem;
+            width: 100%;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.3);
+        }
+
+        .place-order-btn:hover {
+            background: linear-gradient(135deg, #A52A2A, #8B0000);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(139, 0, 0, 0.4);
+        }
+
+        /* Customer Details Modal */
+        .customer-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+        }
+
+        .customer-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border: 3px solid #FFD700;
+        }
+
+        .customer-content h3 {
+            color: #8B0000;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        .customer-form input {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .customer-form input:focus {
+            border-color: #8B0000;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.1);
+        }
+
+        .customer-form button {
+            width: 100%;
+            background: linear-gradient(135deg, #8B0000, #A52A2A);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .customer-form button:hover {
+            background: linear-gradient(135deg, #A52A2A, #8B0000);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.3);
+        }
+
+        /* Receipt Modal */
+        .receipt-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+        }
+
+        .receipt-content {
+            background: white;
+            margin: 2% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border: 3px solid #FFD700;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .receipt-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px dashed #8B0000;
+        }
+
+        .receipt-header h2 {
+            color: #8B0000;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .receipt-header p {
+            color: #666;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .receipt-info {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #8B0000;
+        }
+
+        .receipt-info p {
+            margin: 0.5rem 0;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .receipt-items {
+            margin-bottom: 1.5rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .receipt-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px dashed #ddd;
+            font-size: 0.9rem;
+        }
+
+        .receipt-total {
+            background: linear-gradient(135deg, #8B0000, #A52A2A);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            margin: 1.5rem 0;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.3);
+        }
+
+        .receipt-footer {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 2px dashed #8B0000;
+        }
+
+        .thanks-message {
+            font-size: 1.1rem;
+            color: #8B0000;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .receipt-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .track-order-btn,
+        .continue-ordering-btn {
+            background: linear-gradient(135deg, #FFD700, #FFC400);
+            color: #8B0000;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .continue-ordering-btn {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+
+        .track-order-btn:hover {
+            background: linear-gradient(135deg, #FFC400, #FFD700);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .continue-ordering-btn:hover {
+            background: linear-gradient(135deg, #20c997, #28a745);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+
+        .close-btn,
+        .close-customer,
+        .close-receipt {
+            position: absolute;
+            top: 0.8rem;
+            right: 1rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #8B0000;
+            transition: color 0.3s;
+            background: none;
+            border: none;
+        }
+
+        .close-btn:hover,
+        .close-customer:hover,
+        .close-receipt:hover {
+            color: #FF0000;
+            transform: scale(1.1);
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-content p {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .team-credit {
+            color: #FFD700;
+            font-weight: bold;
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .menu-hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .menu-section h2 {
+                font-size: 2.2rem;
+            }
+
+            .menu-container {
+                grid-template-columns: 1fr;
+            }
+
+            .category-buttons {
+                gap: 0.5rem;
+            }
+
+            .category-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .receipt-buttons {
+                flex-direction: column;
+            }
+
+            .track-order-btn,
+            .continue-ordering-btn {
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+
+            .quick-notification {
+                right: 10px;
+                max-width: 250px;
+            }
+
+            .notifications-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .notifications-header h2 {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Quick Notification -->
+    <div class="quick-notification" id="quick-notification">
+        <div class="quick-notification-content">
+            <span class="quick-notification-icon">✅</span>
+            <span id="quick-notification-text"></span>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <h2 class="logo">🍗 FoodExpress</h2>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <button class="cart-btn" id="cart-btn">🛒 Cart (<span id="cart-count">0</span>)</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Menu Hero Section -->
+    <section class="menu-hero">
+        <div class="menu-hero-content">
+            <h1>Our Delicious Menu</h1>
+            <p>Fresh & Tasty Food Delivered Fast! 🍔</p>
+        </div>
+    </section>
+
+    <!-- Customer Details Modal -->
+    <div class="customer-modal" id="customer-modal">
+        <div class="customer-content">
+            <h3>Enter Your Details</h3>
+            <form class="customer-form" id="customer-form">
+                <input type="text" placeholder="Your Full Name" id="customer-name" required>
+                <input type="tel" placeholder="Phone Number" id="customer-phone" required>
+                <input type="text" placeholder="Delivery Address" id="customer-address" required>
+                <button type="submit">Confirm Order</button>
+            </form>
+            <span class="close-customer">&times;</span>
+        </div>
+    </div>
+
+    <section class="menu-section">
+        <h2>Choose Your Favorite</h2>
+        <div class="category-buttons">
+            <button class="category-btn active" data-category="all">All Items</button>
+            <button class="category-btn" data-category="burger">Burgers</button>
+            <button class="category-btn" data-category="broast">Broast</button>
+            <button class="category-btn" data-category="tikka">Tikka</button>
+            <button class="category-btn" data-category="drink">Drinks</button>
+        </div>
+        <div class="menu-container" id="menu-container"></div>
+    </section>
+
+    <!-- Notifications Section with Clear All Button -->
+    <section class="notifications-section">
+        <div class="notifications-header">
+            <h2>Order Updates</h2>
+            <button class="clear-all-btn" id="clear-notifications-btn">Clear All</button>
+        </div>
+        <div class="notifications-container" id="notifications-container">
+            <div class="notification-placeholder">
+                <p>No notifications yet. Place an order to see updates here!</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="cart-modal" id="cart-modal">
+        <div class="cart-content">
+            <h3>🛒 Your Cart</h3>
+            <div class="cart-items" id="cart-items"></div>
+            <div class="cart-total">
+                <strong>Total: Rs. <span id="total-price">0</span></strong>
+                <button class="place-order-btn" id="place-order-btn">Place Order</button>
+            </div>
+            <span class="close-btn">&times;</span>
+        </div>
+    </div>
+
+    <div class="receipt-modal" id="receipt-modal">
+        <div class="receipt-content">
+            <div class="receipt-header">
+                <h2>🍗 FoodExpress</h2>
+                <p>Order Receipt</p>
+            </div>
+            <div class="receipt-body">
+                <div class="receipt-info">
+                    <p><strong>Customer:</strong> <span id="receipt-customer-name">-</span></p>
+                    <p><strong>Order #:</strong> <span id="receipt-order-number">-</span></p>
+                    <p><strong>Date:</strong> <span id="receipt-date">-</span></p>
+                    <p><strong>Delivery Time:</strong> <span id="receipt-delivery-time">-</span> minutes</p>
+                    <p><strong>Address:</strong> <span id="receipt-address">-</span></p>
+                </div>
+                <div class="receipt-items" id="receipt-items"></div>
+                <div class="receipt-total">
+                    <strong>Total Amount: Rs. <span id="receipt-total">0</span></strong>
+                </div>
+            </div>
+            <div class="receipt-footer">
+                <p class="thanks-message">Thanks for ordering food with our website!</p>
+                <div class="receipt-buttons">
+                    <button class="track-order-btn" id="track-order-btn">Track Order</button>
+                    <button class="continue-ordering-btn" id="continue-ordering-btn">Continue Ordering</button>
+                </div>
+            </div>
+            <span class="close-receipt">&times;</span>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 FoodExpress. All Rights Reserved.</p>
+            <p class="team-credit">A PROJECT BY TEAM A-Z</p>
+        </div>
+    </footer>
+
+    <script>
+        // Menu Data
+        const menuItems = [
+            {
+                id: 1,
+                name: "Zinger Burger",
+                category: "burger",
+                price: 450,
+                image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400",
+                description: "Crispy chicken fillet with fresh vegetables and special sauce"
+            },
+            {
+                id: 2,
+                name: "Beef Burger",
+                category: "burger",
+                price: 380,
+                image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400",
+                description: "Juicy beef patty with cheese and vegetables"
+            },
+            {
+                id: 3,
+                name: "Chicken Broast",
+                category: "broast",
+                price: 650,
+                image: "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400",
+                description: "Crispy fried chicken pieces served with fries"
+            },
+            {
+                id: 4,
+                name: "Chicken Tikka",
+                category: "tikka",
+                price: 520,
+                image: "https://media.istockphoto.com/id/1320005396/photo/chicken-tikka-kebab.jpg?s=612x612&w=0&k=20&c=CeJ-Bq-TN9B9O7x3fejz_PVXy5YYv0VLqQp6C6hNyjc=",
+                description: "Spicy grilled chicken tikka with special masala"
+            },
+            {
+                id: 5,
+                name: "Seekh Tikka",
+                category: "tikka",
+                price: 480,
+                image: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400",
+                description: "Minced meat tikka with traditional spices"
+            },
+            {
+                id: 6,
+                name: "Malai Boti",
+                category: "tikka",
+                price: 580,
+                image: "https://img.freepik.com/premium-photo/spicy-bbq-chicken-malai-tikka-boti-kabab-served-dish-isolated-grey-background-side-view-indian-pakistani-food_689047-3027.jpg",
+                description: "Creamy and tender chicken boti"
+            },
+            {
+                id: 7,
+                name: "Pepsi",
+                category: "drink",
+                price: 120,
+                image: "https://media.istockphoto.com/id/487787086/photo/can-and-glass-of-pepsi-cola.jpg?s=612x612&w=0&k=20&c=38g8qAGbKZmBtFA1yWLqdT2QfsZsAuVjAefymtIcyik=",
+                description: "Cold refreshing drink"
+            },
+            {
+                id: 8,
+                name: "Coca Cola",
+                category: "drink",
+                price: 120,
+                image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=400",
+                description: "Cold refreshing drink"
+            }
+        ];
+
+        // Cart and Order Management
+        let cart = [];
+        let orderNumber = 1001;
+        let customerDetails = null;
+        let notifications = [];
+
+        // DOM Elements
+        const menuContainer = document.getElementById('menu-container');
+        const cartBtn = document.getElementById('cart-btn');
+        const cartModal = document.getElementById('cart-modal');
+        const cartItems = document.getElementById('cart-items');
+        const cartCount = document.getElementById('cart-count');
+        const totalPrice = document.getElementById('total-price');
+        const placeOrderBtn = document.getElementById('place-order-btn');
+        const customerModal = document.getElementById('customer-modal');
+        const customerForm = document.getElementById('customer-form');
+        const receiptModal = document.getElementById('receipt-modal');
+        const trackOrderBtn = document.getElementById('track-order-btn');
+        const continueOrderingBtn = document.getElementById('continue-ordering-btn');
+        const notificationsContainer = document.getElementById('notifications-container');
+        const quickNotification = document.getElementById('quick-notification');
+        const quickNotificationText = document.getElementById('quick-notification-text');
+        const clearNotificationsBtn = document.getElementById('clear-notifications-btn');
+
+        // Initialize Menu
+        function initializeMenu() {
+            menuContainer.innerHTML = '';
+            menuItems.forEach(item => {
+                const menuItem = document.createElement('div');
+                menuItem.className = 'menu-item';
+                menuItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <h3>${item.name}</h3>
+                    <p>${item.description}</p>
+                    <span class="price">Rs. ${item.price}</span>
+                    <button class="add-to-cart" data-id="${item.id}">Add to Cart</button>
+                `;
+                menuContainer.appendChild(menuItem);
+            });
+
+            // Add event listeners to category buttons
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelector('.category-btn.active').classList.remove('active');
+                    btn.classList.add('active');
+                    filterMenu(btn.dataset.category);
+                });
+            });
+
+            // Add event listeners to add to cart buttons
+            document.querySelectorAll('.add-to-cart').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const itemId = parseInt(e.target.dataset.id);
+                    addToCart(itemId);
+                });
+            });
+
+            // Load saved notifications
+            loadNotifications();
+        }
+
+        // Filter Menu by Category
+        function filterMenu(category) {
+            const items = document.querySelectorAll('.menu-item');
+            items.forEach(item => {
+                const itemName = item.querySelector('h3').textContent;
+                const itemCategory = menuItems.find(menuItem =>
+                    menuItem.name === itemName
+                ).category;
+
+                if (category === 'all' || itemCategory === category) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Cart Functions
+        function addToCart(itemId) {
+            const item = menuItems.find(menuItem => menuItem.id === itemId);
+            const existingItem = cart.find(cartItem => cartItem.id === itemId);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ ...item, quantity: 1 });
+            }
+
+            updateCart();
+            showQuickNotification(`${item.name} added to cart!`);
+            showNotification(`${item.name} added to cart!`, 'success');
+        }
+
+        function removeFromCart(itemId) {
+            cart = cart.filter(item => item.id !== itemId);
+            updateCart();
+        }
+
+        function updateCart() {
+            cartItems.innerHTML = '';
+            let total = 0;
+            let count = 0;
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                count += item.quantity;
+
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <div>
+                        <strong>${item.name}</strong>
+                        <br>Rs. ${item.price} x ${item.quantity}
+                    </div>
+                    <button class="remove-btn" data-id="${item.id}">Remove</button>
+                `;
+                cartItems.appendChild(cartItem);
+            });
+
+            totalPrice.textContent = total;
+            cartCount.textContent = count;
+
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.remove-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const itemId = parseInt(e.target.dataset.id);
+                    removeFromCart(itemId);
+                });
+            });
+        }
+
+        // Quick Notification Function
+        function showQuickNotification(message) {
+            quickNotificationText.textContent = message;
+            quickNotification.classList.add('show');
+
+            setTimeout(() => {
+                quickNotification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Clear All Notifications Function
+        function clearAllNotifications() {
+            if (notifications.length === 0) {
+                showQuickNotification('No notifications to clear!');
+                return;
+            }
+            
+            if (confirm('Are you sure you want to clear all notifications?')) {
+                notifications = [];
+                saveNotifications();
+                updateNotificationsDisplay();
+                showQuickNotification('All notifications cleared!');
+            }
+        }
+
+        // Add event listener for clear button
+        clearNotificationsBtn.addEventListener('click', clearAllNotifications);
+
+        // Modal Functions
+        cartBtn.addEventListener('click', () => {
+            cartModal.style.display = 'block';
+        });
+
+        placeOrderBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                showNotification('Your cart is empty!', 'info');
+                return;
+            }
+            cartModal.style.display = 'none';
+            customerModal.style.display = 'block';
+        });
+
+        customerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('customer-name').value;
+            const phone = document.getElementById('customer-phone').value;
+            const address = document.getElementById('customer-address').value;
+
+            customerDetails = { name, phone, address };
+            customerModal.style.display = 'none';
+            showReceipt();
+        });
+
+        trackOrderBtn.addEventListener('click', () => {
+            receiptModal.style.display = 'none';
+            // Scroll to notifications section
+            document.querySelector('.notifications-section').scrollIntoView({
+                behavior: 'smooth'
+            });
+            showNotification(`Order #${orderNumber - 1} is being prepared!`, 'info');
+        });
+
+        continueOrderingBtn.addEventListener('click', () => {
+            receiptModal.style.display = 'none';
+            cart = [];
+            updateCart();
+        });
+
+        // Close modals when clicking X
+        document.querySelectorAll('.close-btn, .close-customer, .close-receipt').forEach(btn => {
+            btn.addEventListener('click', () => {
+                cartModal.style.display = 'none';
+                customerModal.style.display = 'none';
+                receiptModal.style.display = 'none';
+            });
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === cartModal) cartModal.style.display = 'none';
+            if (e.target === customerModal) customerModal.style.display = 'none';
+            if (e.target === receiptModal) receiptModal.style.display = 'none';
+        });
+
+        // Show Receipt
+        function showReceipt() {
+            const receiptItems = document.getElementById('receipt-items');
+            const receiptTotal = document.getElementById('receipt-total');
+            let total = 0;
+
+            receiptItems.innerHTML = '';
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+
+                const receiptItem = document.createElement('div');
+                receiptItem.className = 'receipt-item';
+                receiptItem.innerHTML = `
+                    <span>${item.name} x ${item.quantity}</span>
+                    <span>Rs. ${itemTotal}</span>
+                `;
+                receiptItems.appendChild(receiptItem);
+            });
+
+            receiptTotal.textContent = total;
+
+            // Update receipt info
+            document.getElementById('receipt-customer-name').textContent = `Mr. ${customerDetails.name}`;
+            document.getElementById('receipt-order-number').textContent = orderNumber;
+            document.getElementById('receipt-date').textContent = new Date().toLocaleDateString();
+            document.getElementById('receipt-delivery-time').textContent = '25-30';
+            document.getElementById('receipt-address').textContent = customerDetails.address;
+
+            receiptModal.style.display = 'block';
+            orderNumber++;
+        }
+
+        // Notifications with Permanent Storage
+        function showNotification(message, type = 'info') {
+            const currentTime = new Date();
+            const timeString = currentTime.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            });
+
+            const notification = {
+                message,
+                type,
+                time: timeString,
+                timestamp: currentTime.getTime()
+            };
+
+            // Add to notifications array
+            notifications.push(notification);
+            
+            // Save to localStorage
+            saveNotifications();
+            
+            // Update display
+            updateNotificationsDisplay();
+        }
+
+        function updateNotificationsDisplay() {
+            notificationsContainer.innerHTML = '';
+
+            if (notifications.length === 0) {
+                const placeholder = document.createElement('div');
+                placeholder.className = 'notification-placeholder';
+                placeholder.innerHTML = '<p>No notifications yet. Place an order to see updates here!</p>';
+                notificationsContainer.appendChild(placeholder);
+                return;
+            }
+
+            // Show latest notifications first
+            [...notifications].reverse().forEach(notification => {
+                const notificationElement = document.createElement('div');
+                notificationElement.className = `notification ${notification.type}`;
+                notificationElement.innerHTML = `
+                    ${notification.message}
+                    <div class="notification-time">${notification.time}</div>
+                `;
+                notificationsContainer.appendChild(notificationElement);
+            });
+        }
+
+        function saveNotifications() {
+            localStorage.setItem('foodexpress_notifications', JSON.stringify(notifications));
+        }
+
+        function loadNotifications() {
+            const saved = localStorage.getItem('foodexpress_notifications');
+            if (saved) {
+                notifications = JSON.parse(saved);
+                updateNotificationsDisplay();
+            }
+        }
+
+        // Initialize the page
+        initializeMenu();
+    </script>
+</body>
+</html>

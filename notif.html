@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - FoodExpress</title>
+    <link rel="stylesheet" href="/notification-style.css">
+    <link rel="icon" type="image/x-icon" href="Orange_and_White_Illustrative_Catering_Food_Logo-removebg-preview.png">
+</head>
+<body>
+    <!-- Simple Splash Screen -->
+    <div class="splash-screen">
+        <div class="splash-logo">🍗 FoodExpress</div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <h2 class="logo">🍗 FoodExpress</h2>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="notifications.html">Notifications</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <button class="login-btn" onclick="location.href='menu.html'">Order Now</button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="notifications-hero">
+        <div class="notifications-hero-content">
+            <h1>Your Notifications</h1>
+            <p>Stay updated with your orders and promotions</p>
+        </div>
+    </section>
+
+    <section class="notifications-main-section">
+        <div class="notifications-container-main">
+            <div class="notifications-header">
+                <h2>Recent Activities</h2>
+                <button class="clear-all-btn" onclick="clearAllNotifications()">Clear All</button>
+            </div>
+            
+            <div class="notifications-list" id="notifications-list">
+                <!-- Notifications will be loaded here -->
+                <div class="notification-placeholder">
+                    <p>No notifications yet. Place an order to see updates here!</p>
+                </div>
+            </div>
+
+            <div class="notifications-stats">
+                <div class="stat-item">
+                    <h3>Total Notifications</h3>
+                    <p id="total-notifications">0</p>
+                </div>
+                <div class="stat-item">
+                    <h3>Unread</h3>
+                    <p id="unread-notifications">0</p>
+                </div>
+                <div class="stat-item">
+                    <h3>Orders</h3>
+                    <p id="order-notifications">0</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 FoodExpress. All Rights Reserved.</p>
+            <p class="team-credit">A PROJECT BY TEAM A-Z</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadNotifications();
+            updateStats();
+        });
+
+        // Sample notifications data
+        const sampleNotifications = [
+            {
+                id: 1,
+                title: "Order Confirmed",
+                message: "Your order #12345 has been confirmed and is being prepared.",
+                type: "success",
+                time: "10 minutes ago",
+                read: false
+            },
+            {
+                id: 2,
+                title: "Special Offer",
+                message: "Get 20% off on your next order with code: FOODIE20",
+                type: "info",
+                time: "2 hours ago",
+                read: false
+            },
+            {
+                id: 3,
+                title: "Order Shipped",
+                message: "Your order #12345 is on its way! Expected delivery in 30 minutes.",
+                type: "success",
+                time: "1 day ago",
+                read: true
+            },
+            {
+                id: 4,
+                title: "Delivery Update",
+                message: "Your delivery might be delayed due to heavy traffic.",
+                type: "warning",
+                time: "2 days ago",
+                read: true
+            }
+        ];
+
+        function loadNotifications() {
+            const notificationsList = document.getElementById('notifications-list');
+            const storedNotifications = JSON.parse(localStorage.getItem('foodexpress-notifications')) || sampleNotifications;
+            
+            if (storedNotifications.length === 0) {
+                notificationsList.innerHTML = `
+                    <div class="notification-placeholder">
+                        <p>No notifications yet. Place an order to see updates here!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            notificationsList.innerHTML = '';
+            
+            storedNotifications.forEach(notification => {
+                const notificationElement = document.createElement('div');
+                notificationElement.className = `notification-item ${notification.type} ${notification.read ? 'read' : ''}`;
+                notificationElement.innerHTML = `
+                    <div class="notification-content">
+                        <div class="notification-title">${notification.title}</div>
+                        <div class="notification-message">${notification.message}</div>
+                        <div class="notification-time">${notification.time}</div>
+                    </div>
+                    <div class="notification-actions">
+                        ${!notification.read ? `<button class="mark-read-btn" onclick="markAsRead(${notification.id})">✓</button>` : ''}
+                        <button class="delete-btn" onclick="deleteNotification(${notification.id})">×</button>
+                    </div>
+                `;
+                notificationsList.appendChild(notificationElement);
+            });
+        }
+
+        function updateStats() {
+            const storedNotifications = JSON.parse(localStorage.getItem('foodexpress-notifications')) || sampleNotifications;
+            
+            document.getElementById('total-notifications').textContent = storedNotifications.length;
+            document.getElementById('unread-notifications').textContent = storedNotifications.filter(n => !n.read).length;
+            document.getElementById('order-notifications').textContent = storedNotifications.filter(n => n.type === 'success').length;
+        }
+
+        function markAsRead(notificationId) {
+            let storedNotifications = JSON.parse(localStorage.getItem('foodexpress-notifications')) || sampleNotifications;
+            
+            storedNotifications = storedNotifications.map(notification => {
+                if (notification.id === notificationId) {
+                    return { ...notification, read: true };
+                }
+                return notification;
+            });
+            
+            localStorage.setItem('foodexpress-notifications', JSON.stringify(storedNotifications));
+            loadNotifications();
+            updateStats();
+        }
+
+        function deleteNotification(notificationId) {
+            let storedNotifications = JSON.parse(localStorage.getItem('foodexpress-notifications')) || sampleNotifications;
+            
+            storedNotifications = storedNotifications.filter(notification => notification.id !== notificationId);
+            
+            localStorage.setItem('foodexpress-notifications', JSON.stringify(storedNotifications));
+            loadNotifications();
+            updateStats();
+        }
+
+        function clearAllNotifications() {
+            if (confirm("Are you sure you want to clear all notifications?")) {
+                localStorage.setItem('foodexpress-notifications', JSON.stringify([]));
+                loadNotifications();
+                updateStats();
+            }
+        }
+    </script>
+</body>
+</html>
